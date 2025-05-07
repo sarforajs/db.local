@@ -111,6 +111,7 @@ $TTL    604800
 		  - `cd reverse`
 		  - `sudo nano db.`
 		  - `sudo systemctl restart bind9`
+	8. sudo nano /etc/hosts  add ip address and one.com
 ## windows 11 - client
 1. ethernet adapter (add internal network address)
 open cmd ----> ping <ip address>
