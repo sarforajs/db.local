@@ -1,0 +1,35 @@
+## In linux terminal 
+* `sudo apt update`
+* `sudo apt install samba -y`
+		**Samba** is a file server. 
+			it is used for file sharing.
+* `mkdir tinku`
+* `cd tinku`
+* `echo "tinku is tinku " >> tinku.txt`
+* `cd /etc/samba`
+* `ls -l`
+*smb.conf
+*`sudo nano smb.conf`
+[tinku]
+		comment = "this is tinku share"
+		path = /home/star/tinku
+  		read only = no
+  		browseable = yes
+  save the file
+
+  *we need to set up a samba password for our user account
+
+  `sudo smbpasswd -a username`
+  new smb password: tinku
+
+  `sudo systemctl restart smbd`
+  `sudo systemctl status smbd`
+
+
+
+  # in windows
+  win+r = ip add of debian
+
+
+  my ip 192.168.50.117
+  

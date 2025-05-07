@@ -1,0 +1,82 @@
+* `sudo apt install apache2`
+*`sudo apt install bind9`
+* commands :-
+sudo mkdir /var/www/html/one.com  ,two.com 
+create index.html file iin all the website
+* `cd /etc/bind/forward ls -l`
+* `cd /etc/bind/reverse ls -l`
+* now come back to etc/bind
+* `sudo cp db.local forward/db.one`
+  in db.one do this -
+  one.com. root .one.com
+  localhost
+  192.168.50.10
+* `sudo cp db.local forward/db.two`
+  in db.two do this -
+  two.com. root .two.com
+  localhost
+  192.168.50.10
+* in db.rev do this 
+one.com.root.one.com
+localhost
+100 IN PTR one.com
+100 IN PTR two.com
+* in named.conf.default-zones  copy first 3 zones and paste it in named.conf.local and do the following changes in named.conf.local  only copy this much
+  zone "localhost" {
+        type master;
+        file "/etc/bind/db.local";
+};
+
+zone "127.in-addr.arpa" {
+        type master;
+        file "/etc/bind/db.127";
+};
+
+* `sudo nano /etc/bind/named.conf.local`
+  zone one.com
+  path - etc/bind/forward/db.one
+  zone two.com
+  path - etc/bind/forward/db.two
+  zone '100.50.168.192'
+  path - etc/bind/reverse/db.rev
+* `sudo systemctl restart bind9`
+
+
+
+* `cd /etc/apache2`
+* `cd sites-available`
+* `sudo nano 000-default.conf`
+<virtual host *:80>
+serverAdmin webmaster@one.com
+serverAlias one.com
+DocumentRoot /var/ww/one
+</virtual host>
+
+<virtual host *:80>
+serverAdmin webmaster@two.com
+serverAlias two.com
+DocumentRoot /var/ww/two
+</virtual host>
+
+
+* `cd /var/www`
+* `sudo mkdir one - index.html`
+* `sudo mkdir two - index.html`
+* edit smth in above index.html files
+* `sudo systemctl restart apache2`
+* `sudoo systemctl status apache2`
+* `sudo nano /etc/network/interfaces`
+* internal network - 
+allow-hotplug enp0s8
+iface enp0s8 inet static
+	address 192.168.50.100/24
+	dns-nameservers 192.168.50.100
+* `cd resolve.conf`
+* `sudo nano resolve.conf`
+  nameserver 192.168.50.100 (your static internal ip)
+* `sudo systemctl restart networking`
+
+
+## client - win11
+chrom - one.com
+			- two.com

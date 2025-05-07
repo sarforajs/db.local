@@ -1,0 +1,15 @@
+## step 1 :-
+* Your windows/linux server should be connected to **host-only adapter**
+## step 2 :- 
+* Now make file in D: drive
+* and right click it > go to properties> share> ![c98f8b5e6a9313b295ba5f6c758c0c48.png](../_resources/c98f8b5e6a9313b295ba5f6c758c0c48.png)
+* now select everyone > click on share ![57fe4235d757a5ad82c60c1fa928d1c7.png](../_resources/57fe4235d757a5ad82c60c1fa928d1c7.png)
+* ![6ba6050cfa07c9284c39fda054edbe0b.png](../_resources/6ba6050cfa07c9284c39fda054edbe0b.png)
+
+## step 3 :-
+* now go to your base machine (original window)
+* win + R
+* add "host only ip " of your virtual window server. ![eafdc2cd12b55ae54e12ab6ea490c475.png](../_resources/eafdc2cd12b55ae54e12ab6ea490c475.png)
+  press ok.
+  And now u can access the folder u shared from windows server in your pc
+	

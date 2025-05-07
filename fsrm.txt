@@ -1,0 +1,27 @@
+## refrence
+https://youtu.be/woyqFeAHIFI?si=y-f3lk6lBgNxrNAL
+## what is FSRM
+- FSRM is a windows server role tha
+## what does fsrm do
+
+## key features of FSRM
+
+## why use FSRM
+
+## FSRM installation
+- To install File Server Resource Manager (FSRM),
+-  open Server Manager,
+-  navigate to "Add Roles and Features,"
+-   select "File and Storage Services," then "File and iSCSI Services," and finally choose "File Server Resource Manager".
+
+ - Tools> FSRM(file server resource manager) > quota> r click (click create quota > make tinku folder in d drive and give path) > in quotas we have given storage limit
+
+  - after this go to file screens and block image and videos ![c3ee469c27f45b19d4b6df411de8733a.png](../_resources/c3ee469c27f45b19d4b6df411de8733a.png)
+
+ - after this go to d drive > share tinku folder
+
+  - make sure that your pc has host only adapter.
+
+  - from base machine win+R > enter ip address of your server> and check if some image files are restricting images and videos
+
+![7134a633301cd0ed8652d5d3888eebeb.png](../_resources/7134a633301cd0ed8652d5d3888eebeb.png)

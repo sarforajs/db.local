@@ -1,0 +1,61 @@
+## Prerequsites
+1. three servers
+2. both server me apache 2 chalna chaiye and first server will be your load balancer
+   ***
+**Proxy :** all users will first go to proxy server and only allowed users can access gateway aur baki users ko block kardo . 
+	1. forward proxy:
+	   - anonymity and privacy
+	   - Access control
+	   - Bypassing Geo-Restrictions
+	   - caching
+	   - security monitoring
+	   - ex:- squid, CCproxy, Privoxy, FoxyProxy, TinyProxy, Tor
+	3. reverse proxy: internet se traffic aapke server pe aa raha he, and that proxy server will decide kisko kaha bhejna he. and in this practicle we are performing reverse proxy.
+	   - load balancing
+	   - security
+	   - caching
+	   - GSLB (global server load balancing)
+	   - access control and authentication
+	   - application firewall
+	   - ex: nginx, HAProxy, AWS ELB, squid
+* **haproxy**: 
+* **whitelist** : only allowed people can  access internet  and bakio ko **deny all**
+* **blacklist** : kisko allow nahi karna he internet pe and **allow all**
+
+# server 1
+* Bridge and internal adapters
+*  we will setup **haproxy** in this server
+* `systemctl status apache2`
+* if apache2 is running then stop the apache2 use command `sudo apt purge apache2`
+* we will use the haproxy (port no 80)
+* `sudo apt update`
+* `sudo apt install haproxy`
+* `systemctl status haproxy`
+* `sudo nano  /etc/haproxy/haproxy.cfg`
+* write : 
+```
+frontend http_front
+bind *:80
+default_backend http_back
+
+backend http_back
+balance roundrobin
+server deb2 192.168.0.105:80 check
+server deb3 192.168.0.103:80 check
+````
+* save the file
+* `sudo systemctl restart haproxy`
+* `ss -antp`
+  
+# server 2
+* internal adapter
+* `sudo systemctl install apache2`
+* `sudo apt update`
+* `sudo nano /var/www/html/index.html` already html he to use remove karo aur naya index.html banao.
+* write "hello 1 " html
+# server 3
+* internal adapter
+*  `sudo systemctl install apache2`
+* `sudo apt update`
+* `sudo nano /var/www/html/index.html` already html he to use remove karo aur naya index.html banao.
+* write "hello 2 " html

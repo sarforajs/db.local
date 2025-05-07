@@ -1,0 +1,64 @@
+1. SAMBA
+2. FTP
+3. NFS
+
+# FTP (port no 2049)
+   * sudo adduser tinku
+   * pwd
+   * nano "one" > one.txt
+   * ls
+   * echo "tinku's file" > tinku.txt
+   *  we run FTP -> over the ssh (22) -> sftp
+   * sudo apt install vsftpd
+   * systemctl status vsftpd
+   * sudo nano /etc/vsftpd.conf > uncomment write_enable = yes (line 31)
+   * sudo systemctl restart vsftpd
+
+# client
+* sudo apt install ftp
+* ftp username@ip(of server)
+* ls
+* get one.txt
+* get tinku.txt
+* put demo.txt  (make sure u have created demo.txt in client before using put)
+* 
+* quite
+## windows
+use fileZills > host ip 
+
+# NFS (port   no 2049)
+## server
+* sudo apt install nfs-kernel-server -y
+* cd /mnt
+* ls
+* sudo mkdir my_share
+* sudo mv my_share
+* cd /mnt
+* ls -l
+* sudo chown nobody:nogroup myshare/
+* ls -l
+* sudo nano /etc/exports
+* /mnt/myshare                 clinet_inernal_ip(rw,sync,no_subtree_check)
+* sudo exportfs -i
+* sudo exportfs -a
+* sudo exportfs -i
+* man exportfs
+* sudo exportfs -s
+* sudo systemctl restart nfs-kernel-server
+* systemctl status nfs-kernel-server
+						       
+## client
+* sudo apt install nfs-common -y
+* ls
+* cd /myshare
+* cd /mnt
+* sudo mkdir tinku > make some txt files in tinku
+* ls -l
+* lsblk
+* df
+* du
+* sudo mount 192.168.0.101(server ip ):/mnt/myshare /mnt/tinku/
+* du /mnt/101
+* du -h /mnt/101 
+
+sudo passwd username

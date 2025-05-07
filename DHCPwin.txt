@@ -1,0 +1,15 @@
+- before turing on the machine check if they (client and server) have **internal adapters**
+- go to server manager
+- Add roles and features
+- DHCP (install ) show in dashboard.
+- go in DHCP==> right click on server and go in DHCP manger
+- click on IPv4
+- make new scope of ip address and in that give the range start and end of the IP.
+- get the IP in windows client machine
+- make ethernet adapter automatically assign ip and check the status.
+## To get ip in debian client (by DHCP)
+- Adapter should have internal adapter connected
+- `sudo nano /etc/network/interfaces`
+- make internal adapter dhcp (save the file)
+- `sudo systemctl restart networking`
+- `ip a`

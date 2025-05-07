@@ -1,0 +1,29 @@
+## server -
+- `sudo apt update`
+if it gives error check `sources.list` file.
+- `sudo nano /etc/apt/sources.list`
+- after that go in `sudo nano /etc/network/interfaces`
+- check the adapters `NAT, HOSTONLY, INTERNAL`
+as `enp0s3, enp0s8, enp0s9`
+- give static IP to internal adapter
+- restart the networking `sudo systemctl restart networking`
+- check the ip `ip a`
+- install DHCP server
+`sudo apt install isc-dhcp-server`
+configuration in default folder.
+- `sudo nano /etc/default/isc-dhcp-server`
+  go to 2nd last line and make change in " "
+  give the internal adapter id enp0s_ (in "_"  give the adapter id which ever you have assign static ip)
+  - `cd /etc/dhcp/dhcpd.conf`
+  - on to the line 35 copy it below and comment it
+  give subnet, netmask and range.
+- `sudo systemctl restart isc-dhcp-server`
+- check status - `sudo systemctl status isc-dhcp-server`
+
+## client - 
+- make sure it has internal adapter
+- `sudo apt update`
+- `sudo nano /etc/network/interfaces`
+- make all the adapters as dhcp
+- restart the network
+- and check the ip    

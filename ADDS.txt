@@ -1,0 +1,54 @@
+- ADDS is the heart of the windows server
+-
+  * install ADDS
+  * make 2nd server usme bhi install ADDS
+  * then create multiple users
+  * join client into domain
+
+   ## ADDS steps:
+   use windows 10 pro 
+1. SERVER
+    - 100.100
+	- DNS KHUDKA  .100 AUR MEMBER SERVER .200
+	- firewall off
+	- restart machine
+	- add  roles and feature > ADDS>  tick restart the destination server > install it
+	- click promote this server to a domain controller> tick  add a new forest
+	- root domain name : iacsd.local > next >
+	  * forest functional level : windows server 2012
+	  * Domain fuctional level :  windows server 2016
+	  * untick Read only domain controller
+	  * (DSRM) password : Admin@123
+	  * next
+	- tick DNS 
+	- netBIOS iacsd
+	- path default rhne do  > next
+	- install and restart the pc
+	-  **In AD DS**
+		* adds>r click > users and computers > 
+2. 2ND SERVER (member) for additional domain controller
+	- IP 100.200
+	- DNS 100.100 ALTERNATE 100.200
+	-  sabka firewall off karna
+	-  rename member
+	-  restart
+	-  install ADDS
+	-  add a domain controller to an exesting domain
+	-  iacsd.local > username and password "Administrator@iacsd.local">next
+	-  keep it as it is> dsrm password
+	-  specify install from media option > Replicate from : any domain controller
+	-  default path >next >install it> it will restart automatically
+3. CLIENT
+	- ip 100.51
+	- dns same as above
+	- machine name win10 karo
+	- firewall off
+	- restart
+	- ping 100.100, if ping failed check your network settings
+	- ping iacsd.local 	-   > system properties> r cllick change domain name serveices,win10>domain name server
+
+
+## group
+1.user>create group ditiss, tick glocal,ok
+2. make user> go to properties > member of> select group ditiss
+3.user>ditiss> check the user we created

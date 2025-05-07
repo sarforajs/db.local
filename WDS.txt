@@ -1,0 +1,22 @@
+WDS (WINDOWS DEPLOYMENT SERVICES)
+
+**wds** stands for windows deployment services
+## First configure DHCP
+1. open virtual box
+2. windows server - internal network
+3. storage - connect harddrive iso of window 10
+4. start the machine
+5. local server >name server >ip 100.100, g/w 100.1
+6. install dhcp and configure it (don't forget to commit it)
+7. storage>attatch windows 10 iso
+## Then configure WDS
+8. add roles and features **>**  WDS **>** install it
+9. wds>wds manager>servers>r click >configure>standalone server>install it in d or e drive not in c> tick both dhcp > pxe server initial settings (respond to all client known and unknown) >finish
+10. server>r click install image>browse iso install win > ![3cb6f49a87907921529624b0a6b0092b.png](../_resources/3cb6f49a87907921529624b0a6b0092b.png)
+            >r click boot images> browse iso  boot win>
+			>server> r click> task or start task
+11. make new machine win 10> don't add iso > default adapter - internal
+12. setting>system>boot order network tick and top per rakh
+13. start the machine >press f12 imiditily> name Server\administrator
+
+

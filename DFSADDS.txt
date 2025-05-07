@@ -1,0 +1,21 @@
+* helps youorganize and manage shared folders across multiple servers.
+  ## what dfs does
+  1.dfs namespace : creates a virtual folder structure.
+  * 
+  2. dfs replication
+
+
+	## steps to  configure dfs
+1. add roles and feature
+2. install dfs
+3. tools > new namesapce wizard
+4. servername : "your server name"
+
+
+
+Win+R -> regedit
+Hkey_local_machine\SYSTEM\currentControlSet\services\mup\Parameters
+
+create a DWORD (32-bit) value named EnableDfsLoopbackTargets,and then set the value to 1.
+
+after changing the calue,restart the computer

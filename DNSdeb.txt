@@ -1,0 +1,122 @@
+## Prerequisites
+1. putty
+- host only adapter
+- ssh
+2. DNS server - linux
+
+## 2 machines client and server
+1. machine server - Debian
+   - internal adapter
+   - go in network/ interfaces file and do the changes if required
+   - putty-host only
+   - ssh
+   - apache2 (apt,update,ssh,networking services)
+   - make sure network adapters are connected correctly
+   - interfaces files and restart network
+
+   ## DNS
+   - `sudo apt install apache 2`
+   - `sudo systemctl start apache2`
+   - `sudo systemctl status apache2`
+   - `sudo apt install curl`
+   - `curl localhost`
+   - `cd /var/www/` and then change file permission of html `sudo chmod 777 html`
+   - `cd /var/www/html/`  and then change file permission of index.html `sudo chmod 777 index.html`
+   - delete the index.html file of this path /var/www/html/index.html   using `rm -rf index.html`
+   - now make new index.html file and write "hello world" in it.
+
+   ## Installation of DNS
+   - `sudo apt update`
+   - `sudo apt install bind9`
+   - **bind9** is dns server package name
+   - `cd /etc/bind` chand permission of bind directory `chmod 777 bind`
+   - `cd /etc/bind`
+   - `ls`
+   - `cat named.conf.local`
+   - `cat named.conf.default-zones`
+   - `cat db.local ` for forward zone
+   - `cat db.127` for reverse zone
+   - make 2 directory forward and reverse in etc/bing
+   - `sudo mkdir forward ` for forward zone only
+   - `sudo mkdir reverse ` for reverse zone only
+   -  `sudo cp db.local forward/db.name`
+   -  `sudo cp db.127 reverse/db.rev`
+
+2.  - `cd forward`
+	- `sudo nano db.name` 
+	- remove everything inside db.name and write this
+	"
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     one.com. root.one.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache >
+;
+@       IN      NS      localhost.
+@       IN      A       [write internal ip of the machine here my ip during that time was 192.168.100.75]
+ "
+	- save and exit
+3.  - `cd reverse`
+	- `sudo nano db.rev`
+	-  remove everything  and write this 
+	''
+;
+; BIND reverse data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     one.com. root.one.com. (
+                              1         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      localhost.
+75(last digit of the ip address my was 192.168.100.75 so i wrote 75)    IN      PTR     one.com.
+
+	"
+4. - `cd/etc/bind`
+   -  `ls`
+   - `sudo nano named.conf.default-zones`
+   - copy and paste 1st 2 zones using putty in named.conf.local(u will find named.conf.local using cd .. zone wali file k bhar he)
+   - now edit named.conf.local file using sudo nano.
+   - edit file localhost - one.com
+   - edit file path `/etc/bind/forward/____.com`
+   - edit at reverse position  25.168.192 in arpa
+   - give file path /etc/bind/reverse/db.rev
+   5. - `sudo nano /etc/network/interfaces`
+	 - Add name servers below the static of internal network
+	 - dns-name server ____IP____
+	 - coment out nat adapter ip addres
+	 - remove nat adapter
+	 - `sudo systemctl restart networking`
+	 - `sudo reboot`
+	 - `login again `
+	6. - `cat/etc/resolve.conf`
+	   - `sudo nano /etc/resolve.conf`
+	   - add name server ___IP___
+	   - sudo systemctl status bind9 /named
+	   - running
+	   7. `ping ____.com`
+	      - `cd /etc/bind`
+		  - `cd forward`
+		  - `sudo nano db._____`
+		  - ns local host
+		  - `cd`
+		  - `cd reverse`
+		  - `sudo nano db.`
+		  - `sudo systemctl restart bind9`
+## windows 11 - client
+1. ethernet adapter (add internal network address)
+open cmd ----> ping <ip address>
+open browser -------> enter ip and browse website of server
+ethernet adapter
+
+or
+
+1. resolve.conf me jake dns-servers ......ip.......
