@@ -31,8 +31,9 @@ use fileZills > host ip
 * sudo apt install nfs-kernel-server -y
 * cd /mnt
 * ls
-* sudo mkdir my_share
-* sudo mv my_share
+* sudo mkdir myshare
+* cd myshare
+* make some txt file in myshare
 * cd /mnt
 * ls -l
 * sudo chown nobody:nogroup myshare/
