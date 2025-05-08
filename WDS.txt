@@ -20,3 +20,123 @@ WDS (WINDOWS DEPLOYMENT SERVICES)
 13. start the machine >press f12 imiditily> name Server\administrator
 
 
+
+Gpt answer  
+✅ ON WINDOWS SERVER
+🔹 Step 1: Install Data Deduplication Feature
+Using Server Manager:
+
+Open Server Manager → Click Add Roles and Features.
+
+Proceed to Server Roles → Expand File and Storage Services → File and iSCSI Services.
+
+Tick Data Deduplication → Click Next → Install.
+
+Or via PowerShell:
+
+powershell
+Copy
+Edit
+Install-WindowsFeature FS-Data-Deduplication
+🔹 Step 2: Enable Data Deduplication on a Volume
+Open Server Manager → Go to File and Storage Services → Volumes.
+
+Right-click on the volume (e.g., D:) → Configure Data Deduplication.
+
+Select:
+
+General purpose file server
+
+Choose file age (e.g., deduplicate files older than 5 days)
+
+Set a schedule or leave default
+
+Or via PowerShell:
+
+powershell
+Copy
+Edit
+Enable-DedupVolume -Volume "D:"
+🔹 Step 3: Manually Start Deduplication Job (Optional)
+powershell
+Copy
+Edit
+Start-DedupJob -Volume "D:" -Type Optimization
+🔹 Step 4: Share the Folder for Client Access
+Create a folder on the deduplicated volume (e.g., D:\SharedData).
+
+Right-click → Properties → Sharing tab → Advanced Sharing.
+
+Check Share this folder, give it a name like SharedData.
+
+Set Permissions to allow client access.
+
+✅ ON CLIENT MACHINE
+🔹 Step 1: Map the Network Drive
+Open File Explorer → This PC → Map Network Drive.
+
+Choose a drive letter (e.g., Z:) and path:
+
+🔹 Step 1: Open File Explorer
+On the client machine, press Win + E to open File Explorer.
+
+🔹 Step 2: Click on “This PC”
+In the left panel, click This PC to see all drives.
+
+At the top, click on the “Map network drive” button.
+
+🔹 Step 3: Choose a Drive Letter
+From the dropdown, select a drive letter (e.g., Z: or any free letter).
+
+This letter will appear in File Explorer like any other drive.
+
+🔹 Step 4: Enter the Folder Path
+In the Folder field, type the shared folder path from your server.
+
+Example:
+
+Copy
+Edit
+\\SERVERNAME\SharedData
+Replace SERVERNAME with the actual name or IP address of your server.
+
+If your server's IP is 192.168.1.10, then type:
+
+Copy
+Edit
+\\192.168.1.10\SharedData
+🔹 Step 5: Check “Reconnect at sign-in”
+This ensures the shared drive is automatically reconnected every time the client restarts or logs in.
+
+🔹 Step 6: Click “Finish”
+Windows will try to connect to the shared folder.
+
+If prompted, enter the server username and password (e.g., Administrator).
+
+Once connected, the new drive (like Z:\) will show up in This PC.
+
+✅ Now the Client Can:
+Open the Z:\ drive and save files.
+
+All files saved here will be stored on the server, and deduplication will apply automatically.
+
+🔹 Step 2: Use the Shared Folder
+Save files directly to the mapped drive (Z:\).
+
+All data saved here is deduplicated automatically on the server.
+
+✅ Verification
+On Server:
+Check deduplication status:
+
+open powershell
+
+Get-DedupStatus -Volume "D:"
+View savings:
+
+open powershell
+
+Get-DedupStatus | Select Volume, SavedSpace, OptimizedFilesCount
+
+
+
