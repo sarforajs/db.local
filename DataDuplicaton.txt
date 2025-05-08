@@ -1,0 +1,69 @@
+CONFIGURE DATA DEDUPLICATION IN WINDOWS SERVER
+1. Install Data Deduplication Role (on Server)
+Open PowerShell as Administrator:
+
+powershell
+Copy
+Edit
+Install-WindowsFeature -Name FS-Data-Deduplication
+2. Enable Deduplication on a Volume
+First, list your drives:
+
+powershell
+Copy
+Edit
+Get-Volume
+Enable deduplication (e.g., for D: drive):
+
+powershell
+Copy
+Edit
+Enable-DedupVolume -Volume D:
+3. Schedule Deduplication (Optional)
+Create a deduplication schedule:
+
+powershell
+Copy
+Edit
+Set-DedupSchedule -Name "Default" -Type Optimization -Days Monday,Wednesday,Friday -Start 20:00 -DurationHours 4
+Or manually run it:
+
+powershell
+Copy
+Edit
+Start-DedupJob -Volume D: -Type Optimization
+Check status:
+
+powershell
+Copy
+Edit
+Get-DedupStatus
+4. Verify Deduplication Savings
+powershell
+Copy
+Edit
+Get-DedupStatus | Select-Object Volume, SavingsRate, OptimizedFilesCount
+CONFIGURE CLIENT TO USE DEDUPLICATED DATA
+1. Share the Deduplicated Folder
+On the server:
+
+Right-click the folder on D: (or any deduplicated volume).
+
+Go to Properties > Sharing > Advanced Sharing.
+
+Enable sharing and assign a name (e.g., \\ServerName\DedupShare).
+
+2. Access from Client Machine
+On the client machine:
+
+cmd
+Copy
+Edit
+net use Z: \\ServerName\DedupShare
+Now Z: drive points to the deduplicated data on the server.
+
+NOTE:
+Data Deduplication is transparent to the client.
+
+Clients access data normally; deduplication is handled server-side.
+
