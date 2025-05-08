@@ -1,0 +1,82 @@
+CONFIGURE DNS IN WINDOWS SERVER
+GOAL:
+Set up a DNS Server on Windows Server to resolve hostnames like www.mycompany.local within a local network and allow client machines to use it.
+
+ON WINDOWS SERVER
+Step 1: Install DNS Server Role
+Open Server Manager.
+
+Click Add Roles and Features.
+
+Click Next until you reach Server Roles.
+
+Select DNS Server and click Next.
+
+Continue through the wizard and click Install.
+
+Once installed, click Close.
+
+Step 2: Open DNS Manager
+Press Win + R, type dnsmgmt.msc, and press Enter.
+
+The DNS Manager console will open.
+
+Step 3: Create a Forward Lookup Zone
+In DNS Manager, expand the server node.
+
+Right-click Forward Lookup Zones and choose New Zone.
+
+Zone Type: Choose Primary Zone, click Next.
+
+Zone Name: Enter your domain name (e.g., mycompany.local), click Next.
+
+Zone File: Use the default, click Next.
+
+Dynamic Updates: Choose Do not allow dynamic updates for simplicity, click Next, then Finish.
+
+Step 4: Add a Host (A) Record
+Right-click on the zone you just created (e.g., mycompany.local), select New Host (A or AAAA).
+
+Name: Enter the hostname (e.g., www).
+
+IP Address: Enter the IP of your web server (e.g., 192.168.1.10).
+
+Click Add Host, then Done.
+
+This creates a mapping: www.mycompany.local → 192.168.1.10.
+
+Step 5 (Optional): Create a Reverse Lookup Zone
+Right-click Reverse Lookup Zones, select New Zone.
+
+Zone Type: Choose Primary Zone, click Next.
+
+Select IPv4 Reverse Lookup Zone, click Next.
+
+Enter the Network ID (for 192.168.1.0/24, use 192.168.1), click Next.
+
+Use the default zone file name, click Next.
+
+Choose Do not allow dynamic updates, click Next, then Finish.
+
+You can now add PTR records if needed.
+
+ON CLIENT MACHINE
+Step 1: Set the Server as DNS
+Go to Control Panel → Network and Sharing Center → Change Adapter Settings.
+
+Right-click on the active network adapter and choose Properties.
+
+Select Internet Protocol Version 4 (TCP/IPv4) and click Properties.
+
+Choose Use the following DNS server addresses and enter the DNS server’s IP (e.g., 192.168.1.10).
+
+Click OK.
+
+Step 2: Test DNS Resolution
+Open Command Prompt and run:
+
+cmd
+Copy
+Edit
+ping www.mycompany.local
+If everything is set up correctly, it should resolve to the server’s IP (e.g., 192.168.1.10).
