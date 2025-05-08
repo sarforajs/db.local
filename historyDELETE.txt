@@ -1,0 +1,29 @@
+1. Clear Bash History (Current User)
+bash
+Copy
+Edit
+history -c
+rm ~/.bash_history
+unset HISTFILE
+2. Clear History for All Users (Run as root)
+bash
+Copy
+Edit
+rm /home/*/.bash_history
+rm /root/.bash_history
+3. Clear System Logs (Optional and Dangerous – Requires root)
+To wipe login and shell logs:
+
+bash
+Copy
+Edit
+cat /dev/null > /var/log/wtmp
+cat /dev/null > /var/log/btmp
+cat /dev/null > /var/log/lastlog
+cat /dev/null > /var/log/auth.log
+cat /dev/null > /var/log/syslog
+4. Reboot the System
+bash
+Copy
+Edit
+reboot
